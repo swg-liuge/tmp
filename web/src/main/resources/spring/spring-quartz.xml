@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="helloTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <bean class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+                <property name="jobClass" value="com.song.schedule.HelloJob"/>
+                <property name="jobDataAsMap">
+                    <map>
+                        <entry key="taskPeriodType" value="Hello"/>
+                    </map>
+                </property>
+                <property name="name" value="helloJobName"/>
+                <property name="group" value="song"/>
+                <property name="requestsRecovery" value="true"/>
+                <property name="durability" value="true"/>
+            </bean>
+        </property>
+        <property name="name" value="helloTriggerName"/>
+        <property name="group" value="song"/>
+        <property name="description" value="hello job desc"/>
+        <property name="cronExpression" value="0 0/1 * * * ?"/>
+        <property name="misfireInstructionName" value="MISFIRE_INSTRUCTION_IGNORE_MISFIRE_POLICY"/>
+    </bean>
+
+    <!--解决quartz的job无法注入spring对象-->
+    <!-- 注册调度任务 begin-->
+
+    <!-- Quartz集群Scheduler -->
+    <bean id="clusterScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
+          destroy-method="destroy">
+        <!-- 保存Job数据到数据库所需的数据源 -->
+        <property name="dataSource" ref="dataSource"/>
+        <!-- quartz配置文件路径-->
+        <property name="configLocation" value="classpath:config/quartz.properties"/>
+        <property name="waitForJobsToCompleteOnShutdown" value="true"/>
+        <!-- 启动时延期5秒开始任务 -->
+        <!--<property name="startupDelay" value="5"/>-->
+        <!-- Job接受applicationContext的成员变量名 -->
+        <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <property name="triggers">
+            <list>
+                <ref bean="helloTrigger"/>
+            </list>
+        </property>
+        <!--解决quartz的job无法注入spring对象-->
+        <!--<property name="jobFactory" ref="jobFactory"/>-->
+    </bean>
+    <!-- 注册调度任务 end-->
+
+</beans>

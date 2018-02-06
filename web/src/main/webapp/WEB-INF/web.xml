@@ -1,0 +1,43 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring-context.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+    <servlet-name>dispatcher-servlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!-- 配置springMVC需要加载的配置文件
+        spring-dao.xml,spring-service.xml,spring-web.xml
+        Mybatis - > spring -> springmvc
+     -->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-context.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcher-servlet</servlet-name>
+    <!-- 默认匹配所有的请求 -->
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>helloServlet</servlet-name>
+    <servlet-class>com.song.controller.HelloController</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>helloServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+
+</web-app>

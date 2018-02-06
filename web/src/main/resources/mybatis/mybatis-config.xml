@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <!-- settings是 MyBatis 中极为重要的调整设置，它们会改变 MyBatis 的运行时行为。 -->
+    <settings>
+        <!-- 使用jdbc的getGeneratedKeys获取数据库自增主键值 -->
+        <setting name="useGeneratedKeys" value="true" />
+        <!-- 该配置影响的所有映射器中配置的缓存的全局开关。默认值true -->
+        <setting name="cacheEnabled" value="true" />
+        <!-- 是否允许单一语句返回多结果集（需要兼容驱动）。 默认值true -->
+        <setting name="multipleResultSetsEnabled" value="true" />
+        <!-- 开启驼峰命名转换:Table{create_time} -> Entity{createTime} -->
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+        <!-- 使用列标签代替列名。不同的驱动在这方面会有不同的表现，
+        具体可参考相关驱动文档或通过测试这两种不同的模式来观察所用驱动的结果。默认值true -->
+        <setting name="useColumnLabel" value="true" />
+        <!-- 设置超时时间，它决定驱动等待数据库响应的秒数。 -->
+        <setting name="defaultStatementTimeout" value="25000" />
+    </settings>
+
+</configuration>
