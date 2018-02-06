@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 /**
  * @ description:
- * @ author: songweiguang
+ * @ author: swg
  * @ created: 2018/2/6
  */
 public class HelloJob implements Job, Serializable{
